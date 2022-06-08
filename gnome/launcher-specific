@@ -11,6 +11,7 @@ if [ "$wayland_available" = true ]; then
   export QT_QPA_PLATFORM=wayland-egl
 fi
 append_dir GTK_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/gtk-3.0"
+append_dir GTK_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/gtk-3.0"
 
 snap_python_version="%WITH_PYTHON%"
 if [ "$snap_python_version" = "3.6" ]; then
