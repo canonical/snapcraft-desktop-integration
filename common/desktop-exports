@@ -461,3 +461,5 @@ IBUS_CONFIG_PATH="$XDG_CONFIG_HOME/ibus"
 ensure_dir_exists "$IBUS_CONFIG_PATH"
 [ -d "$IBUS_CONFIG_PATH/bus" ] && rm -rf "$IBUS_CONFIG_PATH/bus"
 ln -sfn "$REALHOME/.config/ibus/bus" "$IBUS_CONFIG_PATH"
+# set AMDGPU path
+export AMDGPU_ASIC_ID_TABLE_PATH=$SNAP_DESKTOP_RUNTIME/usr/share/libdrm/amdgpu.ids
