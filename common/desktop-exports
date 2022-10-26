@@ -65,6 +65,11 @@ if ! snapctl is-connected "%PLATFORM_PLUG%"; then
   exit 1
 fi
 
+# Use keyfile storage if gsettings isn't accessible
+if ! snapctl is-connected gsettings; then
+  export GSETTINGS_BACKEND=keyfile
+fi
+
 append_dir LD_LIBRARY_PATH "$SNAP_DESKTOP_RUNTIME/lib/$ARCH"
 append_dir LD_LIBRARY_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH"
 append_dir LD_LIBRARY_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib"
