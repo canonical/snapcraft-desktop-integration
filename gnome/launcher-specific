@@ -32,3 +32,5 @@ if [ "$needs_update" = true ]; then
   async_exec "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/libgtk-3-0/gtk-query-immodules-3.0" > "$GTK_IM_MODULE_FILE"
 fi
 
+# FIXME: override the notification backend until we sort out appId/desktop file name matching issues
+export GNOTIFICATION_BACKEND=freedesktop
