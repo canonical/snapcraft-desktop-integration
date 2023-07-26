@@ -309,6 +309,11 @@ function make_user_fontconfig {
       echo "  <dir>${data_dirs_array[$i]}/fonts</dir>"
     fi
   done
+  # The purpose of this directory is to make certain fontconfig files available
+  # to the snap environment by default. Right now it helps the transition to Noto
+  # as default font become effective in snaps used in 23.10 and 24.04 before the
+  # base snap is core24.
+  echo '  <include ignore_missing="yes">/etc/fonts/snap-override</include>'
   # In accordance with the discussion at https://bugs.launchpad.net/bugs/2025651
   # we don't load files from /etc/fonts/conf.d at this time.
   echo '  <include ignore_missing="yes">conf.d</include>'
