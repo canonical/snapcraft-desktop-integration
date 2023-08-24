@@ -11,7 +11,7 @@ append_dir PATH "$SNAP/usr/games"
 append_dir PATH "$SNAP_DESKTOP_RUNTIME/usr/games"
 
 # Qt Libs
-find $SNAP/opt/ -maxdepth 1 -mindepth 1 -type d -exec bash -c 'prepend_dir LD_LIBRARY_PATH "{}/libs"' \;
+find $SNAP_DESKTOP_RUNTIME/opt/ -maxdepth 1 -mindepth 1 -type d -exec bash -c 'prepend_dir LD_LIBRARY_PATH "{}/libs"' \;
 prepend_dir LD_LIBRARY_PATH "$SNAP/usr/lib/$ARCH"
 
 # Add QT_PLUGIN_PATH (Qt Modules).
