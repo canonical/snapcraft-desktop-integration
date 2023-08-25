@@ -7,6 +7,7 @@ DATA_DIR             := $(DESTDIR)/data-dir
 BIN_DIR              := $(DESTDIR)/command-chain
 LIB_DIR              := $(DESTDIR)/lib
 DEST_LAUNCHER        := desktop-launch
+LOCALE_GENERATOR     := locale-gen
 DEST_CONFIGURE_HOOK  := hooks-configure-fonts
 
 build: $(DEST_LAUNCHER) $(DEST_CONFIGURE_HOOK)
@@ -28,6 +29,7 @@ $(DEST_CONFIGURE_HOOK):
 install-$(DEST_LAUNCHER): $(DEST_LAUNCHER)
 	install -d $(PLATFORM_DIR)
 	install -d $(DATA_DIR)
+	install -D -m755 $(LOCALE_GENERATOR) "$(BIN_DIR)"/$(LOCALE_GENERATOR)
 	install -D -m755 $(DEST_LAUNCHER) "$(BIN_DIR)"/$(DEST_LAUNCHER)
 
 install-$(DEST_CONFIGURE_HOOK): $(DEST_CONFIGURE_HOOK)
