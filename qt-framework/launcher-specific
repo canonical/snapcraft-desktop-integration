@@ -37,7 +37,6 @@ export QT_XKB_CONFIG_ROOT="/usr/share/X11/xkb"
 
 # Ensure QtChooser behaves.
 export QTCHOOSER_NO_GLOBAL_DIR=1
-export QT_SELECT=6
 # qtchooser hardcodes reference paths, we'll need to rewrite them properly
 ensure_dir_exists "$XDG_CONFIG_HOME/qtchooser"
 echo "$SNAP/usr/lib/qt6/bin" > "$XDG_CONFIG_HOME/qtchooser/6.conf"
