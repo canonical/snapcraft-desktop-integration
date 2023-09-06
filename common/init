@@ -36,7 +36,7 @@ else
 fi
 
 # Set $REALHOME to the users real home directory
-REALHOME=$(getent passwd $UID | cut -d ':' -f 6)
+REALHOME=${SNAP_REAL_HOME}
 
 # Set config folder to local path
 export XDG_CONFIG_HOME="$SNAP_USER_DATA/.config"
@@ -44,12 +44,12 @@ ensure_dir_exists "$XDG_CONFIG_HOME"
 chmod 700 "$XDG_CONFIG_HOME"
 
 # If there is no user user-dirs, don't check for the checksum
-if [[ -f "$REALHOME/.config/user-dirs.dirs" ]]; then
+if [[ -f "$SNAP_REAL_HOME/.config/user-dirs.dirs" ]]; then
   # If the user has modified their user-dirs settings, force an update
   if [[ -f "$XDG_CONFIG_HOME/user-dirs.dirs.md5sum" ]]; then
-    if [[ "$(md5sum < "$REALHOME/.config/user-dirs.dirs")" != "$(cat "$XDG_CONFIG_HOME/user-dirs.dirs.md5sum")" ||
+    if [[ "$(md5sum < "$SNAP_REAL_HOME/.config/user-dirs.dirs")" != "$(cat "$XDG_CONFIG_HOME/user-dirs.dirs.md5sum")" ||
           ( -f "$XDG_CONFIG_HOME/user-dirs.locale.md5sum" &&
-            "$(md5sum < "$REALHOME/.config/user-dirs.locale")" != "$(cat "$XDG_CONFIG_HOME/user-dirs.locale.md5sum")" ) ]]; then
+            "$(md5sum < "$SNAP_REAL_HOME/.config/user-dirs.locale")" != "$(cat "$XDG_CONFIG_HOME/user-dirs.locale.md5sum")" ) ]]; then
       needs_update=true
     fi
   else
