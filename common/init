@@ -36,7 +36,7 @@ else
 fi
 
 # Set $REALHOME to the users real home directory
-REALHOME=${$SNAP_REAL_HOME}
+REALHOME=${SNAP_REAL_HOME}
 
 # Set config folder to local path
 export XDG_CONFIG_HOME="$SNAP_USER_DATA/.config"
