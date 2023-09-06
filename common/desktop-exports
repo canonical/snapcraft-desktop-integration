@@ -181,16 +181,16 @@ if [ "$HOME" != "$SNAP_USER_DATA" ] && ! is_subpath "$XDG_CONFIG_HOME" "$HOME"; 
   done
 fi
 
-if can_open_file "$REALHOME/.config/user-dirs.dirs"; then
+if can_open_file "$SNAP_REAL_HOME/.config/user-dirs.dirs"; then
   # shellcheck disable=SC2154
   if [ "$needs_update" = true ] || [ "$needs_xdg_reload" = true ]; then
-    sed "/^#/!s#\$HOME#${REALHOME}#g" "$REALHOME/.config/user-dirs.dirs" > "$XDG_CONFIG_HOME/user-dirs.dirs"
-    md5sum < "$REALHOME/.config/user-dirs.dirs" > "$XDG_CONFIG_HOME/user-dirs.dirs.md5sum"
+    sed "/^#/!s#\$HOME#${SNAP_REAL_HOME}#g" "$SNAP_REAL_HOME/.config/user-dirs.dirs" > "$XDG_CONFIG_HOME/user-dirs.dirs"
+    md5sum < "$SNAP_REAL_HOME/.config/user-dirs.dirs" > "$XDG_CONFIG_HOME/user-dirs.dirs.md5sum"
     # It's possible user-dirs.dirs exists when user-dirs.locale doesn't. This
     # simply means the user opted to never ask to translate their user dirs
-    if can_open_file "$REALHOME/.config/user-dirs.locale"; then
-      cp -a "$REALHOME/.config/user-dirs.locale" "$XDG_CONFIG_HOME"
-      md5sum < "$REALHOME/.config/user-dirs.locale" > "$XDG_CONFIG_HOME/user-dirs.locale.md5sum"
+    if can_open_file "$SNAP_REAL_HOME/.config/user-dirs.locale"; then
+      cp -a "$SNAP_REAL_HOME/.config/user-dirs.locale" "$XDG_CONFIG_HOME"
+      md5sum < "$SNAP_REAL_HOME/.config/user-dirs.locale" > "$XDG_CONFIG_HOME/user-dirs.locale.md5sum"
     elif [ -f "$XDG_CONFIG_HOME/user-dirs.locale.md5sum" ]; then
       rm "$XDG_CONFIG_HOME/user-dirs.locale.md5sum"
     fi
@@ -225,9 +225,9 @@ fi
 if [ "$needs_xdg_links" = true ]; then
   for ((i = 0; i < ${#XDG_SPECIAL_DIRS_PATHS[@]}; i++)); do
     b="$(realpath "${XDG_SPECIAL_DIRS_PATHS[$i]}" --relative-to="$HOME" 2>/dev/null)"
-    if [[ -n "$b" && "$b" != "." && -e "$REALHOME/$b" ]]; then
+    if [[ -n "$b" && "$b" != "." && -e "$SNAP_REAL_HOME/$b" ]]; then
       [ -d "$HOME/$b" ] && rmdir "$HOME/$b" 2> /dev/null
-      [ ! -e "$HOME/$b" ] && ln -s "$REALHOME/$b" "$HOME/$b"
+      [ ! -e "$HOME/$b" ] && ln -s "$SNAP_REAL_HOME/$b" "$HOME/$b"
     fi
   done
 else
@@ -298,11 +298,11 @@ export FONTCONFIG_FILE="$SNAP_DESKTOP_RUNTIME/etc/fonts/fonts.conf"
 
 function make_user_fontconfig {
   echo "<fontconfig>"
-  if [ -d "$REALHOME/.local/share/fonts" ]; then
-    echo "  <dir>$REALHOME/.local/share/fonts</dir>"
+  if [ -d "$SNAP_REAL_HOME/.local/share/fonts" ]; then
+    echo "  <dir>$SNAP_REAL_HOME/.local/share/fonts</dir>"
   fi
-  if [ -d "$REALHOME/.fonts" ]; then
-    echo "  <dir>$REALHOME/.fonts</dir>"
+  if [ -d "$SNAP_REAL_HOME/.fonts" ]; then
+    echo "  <dir>$SNAP_REAL_HOME/.fonts</dir>"
   fi
   for ((i = 0; i < ${#data_dirs_array[@]}; i++)); do
     if [ -d "${data_dirs_array[$i]}/fonts" ]; then
@@ -403,9 +403,9 @@ fi
 # symlink the dconf file if home plug is connected for read
 DCONF_DEST_USER_DIR="$SNAP_USER_DATA/.config/dconf"
 if [ ! -f "$DCONF_DEST_USER_DIR/user" ]; then
-  if [ -f "$REALHOME/.config/dconf/user" ]; then
+  if [ -f "$SNAP_REAL_HOME/.config/dconf/user" ]; then
     ensure_dir_exists "$DCONF_DEST_USER_DIR"
-    ln -s "$REALHOME/.config/dconf/user" "$DCONF_DEST_USER_DIR"
+    ln -s "$SNAP_REAL_HOME/.config/dconf/user" "$DCONF_DEST_USER_DIR"
   fi
 fi
 # symlink the runtime dconf file as well
@@ -463,7 +463,7 @@ for f in "${gtk_configs[@]}"; do
   dest="$XDG_CONFIG_HOME/$f"
   if [ ! -L "$dest" ]; then
     ensure_dir_exists "$(dirname "$dest")"
-    ln -s "$REALHOME/.config/$f" "$dest"
+    ln -s "$SNAP_REAL_HOME/.config/$f" "$dest"
   fi
 done
 
@@ -472,7 +472,7 @@ done
 IBUS_CONFIG_PATH="$XDG_CONFIG_HOME/ibus"
 ensure_dir_exists "$IBUS_CONFIG_PATH"
 [ -d "$IBUS_CONFIG_PATH/bus" ] && rm -rf "$IBUS_CONFIG_PATH/bus"
-ln -sfn "$REALHOME/.config/ibus/bus" "$IBUS_CONFIG_PATH"
+ln -sfn "$SNAP_REAL_HOME/.config/ibus/bus" "$IBUS_CONFIG_PATH"
 
 # Set libgweather path
 export LIBGWEATHER_LOCATIONS_PATH="$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/libgweather-4/Locations.bin"
