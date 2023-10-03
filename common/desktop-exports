@@ -124,9 +124,6 @@ append_dir LD_LIBRARY_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/pulseaudio"
 prepend_dir __EGL_VENDOR_LIBRARY_DIRS "/var/lib/snapd/lib/glvnd/egl_vendor.d"
 append_dir __EGL_VENDOR_LIBRARY_DIRS "$SNAP_DESKTOP_RUNTIME/usr/share/glvnd/egl_vendor.d"
 
-# EGL platform config dirs, needed for libnvidia-egl-wayland1
-append_dir __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS "$SNAP_DESKTOP_RUNTIME/usr/share/egl/egl_external_platform.d"
-
 # Tell GStreamer where to find its plugins
 export GST_PLUGIN_PATH="$SNAP/usr/lib/$ARCH/gstreamer-1.0"
 export GST_PLUGIN_SYSTEM_PATH="$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/gstreamer-1.0"
