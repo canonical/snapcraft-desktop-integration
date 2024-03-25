@@ -211,9 +211,9 @@ if [ $needs_xdg_reload = true ]; then
   needs_xdg_reload=false
 fi
 
-# Check if we can actually read the contents of each xdg dir
+# Check existance of each xdg dir
 for ((i = 0; i < ${#XDG_SPECIAL_DIRS_PATHS[@]}; i++)); do
-  if ! can_open_file "${XDG_SPECIAL_DIRS_PATHS[$i]}"; then
+  if [ ! -d "${XDG_SPECIAL_DIRS_PATHS[$i]}" ]; then
     needs_xdg_update=true
     needs_xdg_links=true
     break
