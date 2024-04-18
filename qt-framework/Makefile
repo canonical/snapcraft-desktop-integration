@@ -9,6 +9,7 @@ LIB_DIR              := $(DESTDIR)/lib
 DEST_LAUNCHER        := desktop-launch
 LOCALE_GENERATOR     := locale-gen
 DEST_CONFIGURE_HOOK  := hooks-configure-fonts
+WITH_GRAPHICS        := true
 
 build: $(DEST_LAUNCHER) $(DEST_CONFIGURE_HOOK)
 
@@ -19,7 +20,7 @@ clean:
 $(DEST_LAUNCHER):
 	@cat $(SRC_DIR)/init >> $(DEST_LAUNCHER)
   # tail -n +2 to remove the shebang
-	@tail -n +2 $(SRC_DIR)/desktop-exports | sed -e "s/%PLATFORM_PLUG%/$${PLATFORM_PLUG:?}/" >> $(DEST_LAUNCHER)
+	@tail -n +2 $(SRC_DIR)/desktop-exports | sed -e "s/%PLATFORM_PLUG%/$${PLATFORM_PLUG:?}/" -e "s/%WITH_GRAPHICS%/$(WITH_GRAPHICS)/" >> $(DEST_LAUNCHER)
 	@tail -n +2 $(SRC_DIR)/launcher-specific >> $(DEST_LAUNCHER)
 	@tail -n +2 $(SRC_DIR)/mark-and-exec >> $(DEST_LAUNCHER)
 
