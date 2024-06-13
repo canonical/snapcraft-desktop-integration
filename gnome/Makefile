@@ -11,6 +11,7 @@ DEST_CONFIGURE_HOOK  := hooks-configure-fonts
 HW_PLATFORM          := $(shell uname --hardware-platform)
 ARCH                 := $(HW_PLATFORM)-linux-gnu
 WITH_PYTHON          := "3.10"
+WITH_GRAPHICS        := true
 
 .PHONY: clean install-$(DESTLAUNCHER) install-$(DEST_CONFIGURE_HOOK)
 
@@ -23,7 +24,7 @@ clean:
 $(DEST_LAUNCHER):
 	@cat $(SRC_DIR)/init >> $(DEST_LAUNCHER)
 # tail -n +2 to remove the shebang
-	@tail -n +2 $(SRC_DIR)/desktop-exports | sed -e "s/%PLATFORM_PLUG%/$${PLATFORM_PLUG:?}/" >> $(DEST_LAUNCHER)
+	@tail -n +2 $(SRC_DIR)/desktop-exports | sed -e "s/%PLATFORM_PLUG%/$${PLATFORM_PLUG:?}/" -e "s/%WITH_GRAPHICS%/$(WITH_GRAPHICS)/" >> $(DEST_LAUNCHER)
 	@tail -n +2 $(SRC_DIR)/launcher-specific | sed -e "s/%WITH_PYTHON%/$(WITH_PYTHON)/" >> $(DEST_LAUNCHER)
 	@tail -n +2 $(SRC_DIR)/mark-and-exec >> $(DEST_LAUNCHER)
 
