@@ -38,3 +38,4 @@ fi
 
 # FIXME: override the notification backend until we sort out appId/desktop file name matching issues
 export GNOTIFICATION_BACKEND=freedesktop
+export NOTIFY_IGNORE_PORTAL=1
