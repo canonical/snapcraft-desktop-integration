@@ -20,8 +20,8 @@ append_dir GTK_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/gtk-4.0"
 snap_python_version="%WITH_PYTHON%"
 if [ "$snap_python_version" = "3.6" ]; then
   append_dir PYTHONPATH "$SNAP_DESKTOP_RUNTIME/usr/lib/python3.6/site-packages"
-elif [ "$snap_python_version" = "3.8" ]; then
-  append_dir PYTHONPATH "$SNAP_DESKTOP_RUNTIME/usr/lib/python3.8"
+else # python version is 3.8 or higher.
+  append_dir PYTHONPATH "$SNAP_DESKTOP_RUNTIME/usr/lib/python$snap_python_version"
 fi
 append_dir PYTHONPATH "$SNAP_DESKTOP_RUNTIME/usr/lib/python3/dist-packages"
 
