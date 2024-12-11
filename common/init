@@ -80,3 +80,14 @@ if ! grep -qs "^\s*confinement:\s*classic\s*" "$SNAP/meta/snap.yaml"; then
     export LD_PRELOAD="$LD_PRELOAD:$SNAP/gnome-platform/\$LIB/bindtextdomain.so"
   fi
 fi
+
+# Check if the desktop runtime has been updated
+
+RUNTIME_LAST_DATE="$SNAP_USER_COMMON/.cache/desktop-runtime-date"
+
+if [ ! -f "$RUNTIME_LAST_DATE" -o \
+       "$SNAP_DESKTOP_RUNTIME" -nt "$RUNTIME_LAST_DATE" -o \
+       "$SNAP_DESKTOP_RUNTIME" -ot "$RUNTIME_LAST_DATE" ]; then
+  needs_update=true
+  touch -r "$SNAP_DESKTOP_RUNTIME" "$RUNTIME_LAST_DATE"
+fi
