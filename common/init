@@ -83,11 +83,13 @@ fi
 
 # Check if the desktop runtime has been updated
 
-RUNTIME_LAST_DATE="$SNAP_USER_COMMON/.cache/desktop-runtime-date"
+USER_CACHE_FOLDER="$SNAP_USER_COMMON/.cache"
+RUNTIME_LAST_DATE="$USER_CACHE_FOLDER/desktop-runtime-date"
 
 if [ ! -f "$RUNTIME_LAST_DATE" -o \
        "$SNAP_DESKTOP_RUNTIME" -nt "$RUNTIME_LAST_DATE" -o \
        "$SNAP_DESKTOP_RUNTIME" -ot "$RUNTIME_LAST_DATE" ]; then
   needs_update=true
+  mkdir -p "$USER_CACHE_FOLDER"
   touch -r "$SNAP_DESKTOP_RUNTIME" "$RUNTIME_LAST_DATE"
 fi
