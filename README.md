@@ -13,7 +13,7 @@ To test changes on these files, you have to:
   test them (for example, for gnome runtime, you should download
   the https://github.com/ubuntu/gnome-sdk repository and change
   to the desired *runtime* branch, the one without the -sdk
-  postfix).
+  suffix).
 * edit the *runtime* snapcraft file to make it point to your fork/branch
   of *snapcraft-desktop-integration*
 * build the new *runtime* snap
