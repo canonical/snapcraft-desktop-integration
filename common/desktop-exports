@@ -498,3 +498,6 @@ export LIBTHAI_DICTDIR="$SNAP_DESKTOP_RUNTIME/usr/share/libthai/"
 # is in the default place, but not if it is snapped in the gnome-sdk/gnome-runtime snap.
 
 append_dir LD_LIBRARY_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/libproxy"
+
+# GLib gio-launch-desktop, used by g_app_info_launch
+export GIO_LAUNCH_DESKTOP=${GIO_LAUNCH_DESKTOP:-"$SNAP_DESKTOP_RUNTIME/usr/libexec/gio-launch-desktop"}
