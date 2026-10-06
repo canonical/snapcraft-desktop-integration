@@ -3,8 +3,8 @@
 # GTK launcher specific part #
 ##############################
 
-# shellcheck disable=SC2154
-if [ "$wayland_available" = true ]; then
+# shellcheck disable=SC2154 disable=SC2050
+if [ "%FORCE_WAYLAND%" != "false" ] && [ "$wayland_available" = true ]; then
   export GDK_BACKEND="wayland"
   export CLUTTER_BACKEND="wayland"
   # Does not hurt to specify this as well, just in case
