@@ -490,8 +490,14 @@ ensure_dir_exists "$IBUS_CONFIG_PATH"
 [ -d "$IBUS_CONFIG_PATH/bus" ] && rm -rf "$IBUS_CONFIG_PATH/bus"
 ln -sfn "$SNAP_REAL_HOME/.config/ibus/bus" "$IBUS_CONFIG_PATH"
 
-# Set libgweather path
-export LIBGWEATHER_LOCATIONS_PATH="$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/libgweather-4/Locations.bin"
+# Set libgweather path. libgweather < 4.6 stores the database in
+# <libdir>/libgweather-4/; 4.6 moved it to <libdir>/gweather-locations/.
+# Pick whichever layout the content snap actually ships.
+if [ -e "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/libgweather-4/Locations.bin" ]; then
+  export LIBGWEATHER_LOCATIONS_PATH="$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/libgweather-4/Locations.bin"
+else
+  export LIBGWEATHER_LOCATIONS_PATH="$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/gweather-locations/Locations.bin"
+fi
 
 # Set libthai dict path
 export LIBTHAI_DICTDIR="$SNAP_DESKTOP_RUNTIME/usr/share/libthai/"
